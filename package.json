@@ -1,7 +1,7 @@
 {
-  "name": "sls-todos-app",
+  "name": "sls-todo-app",
   "version": "1.0.0",
-  "description": "Serverless Todos taking SPA demo",
+  "description": "Serverless Todo SPA demo",
   "main": "index.js",
   "scripts": {
     "start": "node local-server.js",
