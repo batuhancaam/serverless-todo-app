@@ -1,0 +1,49 @@
+<div class="container">
+    <div class="inner-wrap">
+        <div *ngIf="isLoading">
+            <div class="spinner-container">
+                <spinner loadingText="Loading...Please wait."></spinner>
+            </div>
+        </div>
+        <div class="alert alert-warning alert-pos" *ngIf="noTodosFound">
+            <div class="message-wrap">
+                <span>Welcome to the Serverless Todo App.</span>
+                <button class="btn btn-danger auto_left_margin" (click)="onShowTodoModal($event)">Click to create your first todo</button>
+            </div>
+        </div>
+        <div *ngIf="alert.message" class="alert alert-{{alert.type}}" role="alert">
+            {{alert.message}}
+        </div>
+        <div class="list-group-container" 
+            infinite-scroll
+            [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="350"
+            (scrolled)="onScrollDown()"
+            >
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let todo of userTodos"
+                    (click)="openTodo(todo)">
+                    <todo-snapshot class="todo-snapshot" 
+                        [todo]="todo"
+                        (deleteTodoEvent)="deleteTodo(todo)"
+                        (refreshTodosEvent)="refreshTodos()"
+                    ></todo-snapshot>
+                </li>
+            </ul>
+            <div class="list-loading" *ngIf="isListLoading">
+                <div class="spinner-container">
+                    <spinner></spinner>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <todo class="page-modal" 
+        *ngIf="showTodo" 
+        [todo]="selectedTodo"
+        (updateTodoEvent)="updateTodo($event)"
+        (closeModalEvent)="onCloseTodoModal()"
+    ></todo>
+</div>

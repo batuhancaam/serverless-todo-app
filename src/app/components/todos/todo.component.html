@@ -1,0 +1,73 @@
+<div class="todo-modal page-modal">
+    <div class="container">
+        <div class="card">
+            <div *ngIf="isLoading" class="loading-overlay"></div>
+            <div class="card-body">
+                <div class="todo-actions flex-space">
+                    <span class="todo-meta">
+                        <span *ngIf="todo?.timestamp">
+                            Created {{ todo?.timestamp * 1000 | date: 'short' }}
+                        </span>
+                    </span>
+                    <span id="page-modal-close" class="page-modal-button" (click)="onCloseTodoModal($event)">
+                        <i class="fas fa-times"></i>
+                        <span class="key-label">Esc</span>
+                    </span>
+                </div>
+                <div *ngIf="alert.message" class="alert alert-{{alert.type}}" role="alert">
+                    {{alert.message}}
+                </div>
+                <div *ngIf="isLoading">
+                    <div class="div-loading">
+                        <div class="spinner-container">
+                            <spinner></spinner>
+                        </div>
+                    </div>
+                </div>
+                <form [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <div class="input-container">
+                            <i class="fas fa-thumbtack small pin" aria-hidden="true"></i>
+                            <input name="title" 
+                                id="title" 
+                                type="text" 
+                                class="form-control" 
+                                placeholder="{{defaultTitle}}"
+                                formControlName="title" 
+                                value="{{todo?.title}}"
+                            >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="content" 
+                            id="content" 
+                            cols="30" 
+                            rows="4" 
+                            class="form-control" 
+                            placeholder="Take a todo..."
+                            formControlName="content" 
+                            #focus
+                            value="{{todo?.content}}"
+                        ></textarea>
+                        
+                    </div>
+                    <input type="hidden" name="cat" id="cat" formControlName="cat" value="{{todo?.cat}}">
+                    <input type="hidden" name="timestamp" id="timestamp" formControlName="timestamp" value="{{todo?.timestamp}}">
+                    <input type="hidden" name="todo_id" id="todo_id" formControlName="todo_id" value="{{todo?.todo_id}}">
+                    <div class="form-group flex-space">
+                        <div>
+                            <span class="form-validation-alert soft-alert"
+                                *ngIf="todoForm.controls['content'].touched && !todoForm.controls['content'].valid"
+                            >Please type in a todo.</span>
+                        </div>
+                        <button  type="submit" class="btn btn-primary" [disabled]="!todoForm.valid || disableSubmit">
+                            <i class="fas fa-edit" aria-hidden="true"></i>
+                            <span>Save Todo</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>

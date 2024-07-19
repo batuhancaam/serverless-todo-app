@@ -1,0 +1,17 @@
+<div class="container-fluid bg-white">
+    <app-navbar
+        (showTodoModalEvent)="onShowTodoModal($event)"
+        (signOutUserEvent)="onSignOut()"
+    ></app-navbar>
+</div>
+<div class="container-fluid">
+    <todos
+        (showTodoModalEvent)="onShowTodoModal($event)"
+    ></todos>
+    <todo class="page-modal" 
+        *ngIf="showTodoModal" 
+        [todo]="newTodo"
+        (closeModalEvent)="onCloseTodoModal()"
+    ></todo>
+    <div class="footer"></div>
+</div>
